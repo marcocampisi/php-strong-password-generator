@@ -22,6 +22,8 @@
             <button class="btn btn-primary" type="submit">Genera</button>
         </form>
         <?php
+        include 'functions.php';
+        
         if (isset($_GET['passLength'])) {
             $passLength = $_GET['passLength'];
 
@@ -29,24 +31,6 @@
 
             echo "<h2>La tua password è:</h2>";
             echo "<p>$generatedPassword</p>";
-        }
-
-        function generateStrongPassword($length)
-        {
-            $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $lowercase = 'abcdefghijklmnopqrstuvwxyz';
-            $numbers = '0123456789';
-            $symbols = '!@#$%^&*()_+[]{}|';
-
-            $characters = $uppercase . $lowercase . $numbers . $symbols;
-            $password = '';
-
-            for ($i = 0; $i < $length; $i++) {
-                $randomIndex = rand(0, strlen($characters) - 1);
-                $password .= $characters[$randomIndex];
-            }
-
-            return $password;
         }
         ?>
     </div>

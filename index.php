@@ -12,8 +12,24 @@
 </head>
 <body>
     <form action="index.php" method="get">
-        <input type="number" name="length" placeholder="Lunghezza">
+        <input type="radio" id="short" name="length" value="1">
+        <label for="short">Corta</label>
+        <input type="radio" id="medium" name="length" value="2">
+        <label for="medium">Media</label>
+        <input type="radio" id="long" name="length" value="3">
+        <label for="long">Lunga</label>
         <input type="submit" value="Genera">
     </form>
+    <?php
+        if (isset($_GET['length'])) {
+            $length = $_GET['length'];
+            $characters = array('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789', '!@#$%^&*()_+{}|:<>?,./;[]');
+            $password = '';
+            for ($i = 0; $i < $length; $i++) {
+                $password .= $characters[mt_rand(0, count($characters) - 1)];
+            }
+            echo 'La tua password è: ' . $password;
+        }
+    ?>
 </body>
 </html>

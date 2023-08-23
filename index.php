@@ -12,23 +12,35 @@
 </head>
 <body>
     <form action="index.php" method="get">
-        <input type="radio" id="short" name="length" value="1">
-        <label for="short">Corta</label>
-        <input type="radio" id="medium" name="length" value="2">
-        <label for="medium">Media</label>
-        <input type="radio" id="long" name="length" value="3">
-        <label for="long">Lunga</label>
-        <input type="submit" value="Genera">
+        <label for="passLength">Lunghezza password:</label>
+        <input type="number" id="passLength" name="passLength" min="8" max="32" required>
+        <button type="submit">Genera</button>
     </form>
     <?php
-        if (isset($_GET['length'])) {
-            $length = $_GET['length'];
-            $characters = array('abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789', '!@#$%^&*()_+{}|:<>?,./;[]');
+        if (isset($_GET['passLength'])) {
+            $passLength = $_GET['passLength'];
+            
+            $generatedPassword = generateStrongPassword($passLength);
+
+            echo "<h2>La tua password è:</h2>";
+            echo "<p>$generatedPassword</p>";
+        }
+
+        function generateStrongPassword($length) {
+            $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $lowercase = 'abcdefghijklmnopqrstuvwxyz';
+            $numbers = '0123456789';
+            $symbols = '!@#$%^&*()_+[]{}|';
+            
+            $characters = $uppercase . $lowercase . $numbers . $symbols;
             $password = '';
+            
             for ($i = 0; $i < $length; $i++) {
-                $password .= $characters[mt_rand(0, count($characters) - 1)];
+                $randomIndex = rand(0, strlen($characters) - 1);
+                $password .= $characters[$randomIndex];
             }
-            echo 'La tua password è: ' . $password;
+            
+            return $password;
         }
     ?>
 </body>
